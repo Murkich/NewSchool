@@ -1,0 +1,19 @@
+<div th:fragment="header" class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <p class="p-logo" style="color: #1e2d4c;">M</p>
+            <p class="p-logo" style="color: #e6e6e6;">S</p>
+        </a>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-dark" style="color: black">Главная</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark" style="color: black">О нас</a></li>
+            <li><a href="users/courses" class="nav-link px-2 link-dark" style="color: black">Наши курсы</a></li>
+            <li><a href="#" class="nav-link px-2 link-dark" style="color: black">Отзывы</a></li>
+        </ul>
+        <div class="col-md-3 text-end">
+            <form th:action="@{/signin}" method="get">
+                <input type="submit" class="butn button-outline-primary" value="Войти">
+            </form>
+        </div>
+    </header>
+</div>

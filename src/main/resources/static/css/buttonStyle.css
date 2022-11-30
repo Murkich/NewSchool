@@ -1,0 +1,54 @@
+.login-logout-header {
+    height: 30px;
+    width: 60px;
+    background-color: rgb(148, 89, 177);
+    border: none;
+    margin-left: -50px;
+}
+
+.login-logout-header:hover {
+    background-color: rgba(148, 89, 177, 0.7);
+    cursor: pointer;
+}
+
+.logout-login-wrapper {
+    margin-top: -50px;
+    margin-right: 10px;
+    justify-content: flex-end;
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-button, .delete-button {
+    height: 40px;
+    width: 105px;
+    background-color: rgba(148, 89, 177, 1);
+    border: none;
+    color: rgb(0, 0, 0);
+}
+.filter-button {
+    height: 40px;
+    width: 125px;
+    background-color: rgba(148, 89, 177, 1);
+    border: none;
+    color: rgb(0, 0, 0);
+    margin-top: 5px;
+}
+.edit-button {
+    margin-left: 1px;
+}
+
+.edit-button:hover, .delete-button:hover, .add-button:hover, .filter-button:hover {
+    background-color: rgba(148, 89, 177, 0.7);
+    cursor: pointer;
+}
+
+.add-button {
+    height: 40px;
+    width: 211px;
+    background-color: rgba(148, 89, 177, 1);
+    border: none;
+    margin-top: 1px;
+    margin-bottom: 20px;
+    color: rgb(0, 0, 0);
+}

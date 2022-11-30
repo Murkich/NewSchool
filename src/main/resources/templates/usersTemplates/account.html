@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css" th::href="@{/css/usersStyle.css}">
+    <link rel="stylesheet" type="text/css" href="/css/commonStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<main>
+    <section th:insert="parts/userhead :: userhead">
+    </section>
+    <div>
+        <div style="padding-top: 30px; padding-bottom: 30px; margin-bottom: 10em; margin-top: 10em" class="sign-in-box">
+            <div class="sign-in-container">
+                <div class="sign-in-container2">
+                    <form th:if="${editOrSave == 'edit'}" class="form-sign-group" th:action="@{/user/account/save}" method="post" th:object="${user}">
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" th:field="*{username}" type="email" spellcheck="false" placeholder="E-mail">
+                            <span th:if="${#fields.hasErrors('username')}" th:errorclass="error" th:errors="*{username}"></span>
+                        </span>
+                        <br>
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" th:field="*{password}" type="password" spellcheck="false" placeholder="Старый пароль">
+                            <span th:if="${#fields.hasErrors('password')}" th:errorclass="error" th:errors="*{password}"></span>
+                        </span>
+                        <br>
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" th:field="*{newPassword}" type="password" spellcheck="false" placeholder="Новый пароль">
+                        </span>
+                        <br>
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" th:field="*{passwordConfirm}" type="password" spellcheck="false" placeholder="Повторите пароль">
+                        </span>
+                        <div style="text-align: left" th:if="${#fields.hasErrors('global')}">
+                            <span class="error" th:each="err : ${#fields.errors('global')}" th:text="${err}"></span>
+                        </div>
+                        <br>
+                        <button  class="form-sign-button">
+                            <span>Сохранить</span>
+                        </button>
+                        <br>
+                    </form>
+                    <form th:if="${editOrSave == 'save'}" class="form-sign-group" th:action="@{/user/account/edit}" method="post" th:object="${user}">
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" readonly th:field="*{username}" type="email" spellcheck="false" placeholder="E-mail">
+                        </span>
+                        <br>
+                        <span class="wrapper-logpas">
+                            <input class="form-sign-input" readonly th:field="*{password}" type="text" spellcheck="false" placeholder="Пароль">
+                        </span>
+                        <br>
+                        <br>
+                        <button  class="form-sign-button">
+                            <span>
+                                Редактировать
+                            </span>
+                        </button>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:insert="parts/footer :: footer"></footer>
+</html>

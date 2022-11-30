@@ -1,0 +1,33 @@
+<div th:fragment="userhead">
+    <header class="border-bottom mb-3">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
+                <a href="/user" class="d-flex align-items-center mb-lg-0 text-dark text-decoration-none">
+                    <p class="p-logo" style="color: #1e2d4c;">M</p>
+                    <p class="p-logo" style="color: #e6e6e6;">S</p>
+                </a>
+
+                <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/courses" class="nav-link px-2 link-dark">Список курсов</a></li>
+                    <li><a href="/user/materials" class="nav-link px-2 link-dark">Материалы</a></li>
+                    <li><a href="/user/article" class="nav-link px-2 link-dark">Статьи</a></li>
+                </ul>
+
+                <div class="dropdown">
+                    <a class="d-block link-dark text-decoration-none dropdown-toggle">
+                        <img src="https://s3-us-west-1.amazonaws.com/s3-lc-upload/assets/default_avatar.jpg" alt="uph" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <form th:action="@{/logout}" method="post">
+                        <ul class="dropdown-user-menu text-small">
+                            <li><a class="dropdown-item" href="/user/mycourses">Мои курсы</a></li>
+                            <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
+                            <li><a class="dropdown-item" href="/user/account">Аккаунт</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><button class="dropdown-item">Выйти</button></li>
+                        </ul>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

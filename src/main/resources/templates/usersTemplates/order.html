@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css" th::href="@{/css/usersStyle.css}">
+    <link rel="stylesheet" type="text/css" href="/css/commonStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<main>
+    <section th:insert="parts/userhead :: userhead">
+    </section>
+    <div class="order-box">
+        <div class="order-name">
+            <div class="order-course-name">
+                Информация о заказе
+            </div>
+            <div class="order-course-info" th:object="${course}">
+                <div class="card-course">
+                    <p th:text=" ${course.name}"></p>
+                </div>
+                <div class="card-course">
+                    <p th:text=" ${course.language}"></p>
+                </div>
+                <div class="card-course">
+                    <p th:text="${course.price}"></p>
+                </div>
+            </div>
+        </div>
+        <div class="order-card">
+            <div class="order-card-info">
+                <div style="font-weight: 500;">
+                    Информация карты
+                </div>
+                <div style="margin-top: 1rem;">
+                    <div>
+                        Выберите метод оплаты
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:insert="parts/footer :: footer"></footer>
+</html>

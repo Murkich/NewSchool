@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/commonStyle.css" th::href="@{/css/commonStyle.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="parts/header :: header"></header>
+<div class="conteiner">
+    <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+        <div class="col-10 col-sm-8 col-lg-6">
+            <img src="img/7800.jpg" class="d-block mx-lg-auto img-fluid" alt="School Themes" width="700" height="500" loading="lazy">
+        </div>
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold lh-1 mb-3">Изучай иностранный язык вместе с MUR School</h1>
+            <p class="lead">Помогаем заговорить на иностранном языке и уверенно использовать его в жизни</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <form th:action="@{/signin}" method="get">
+                    <input type="submit" class="button-primary butn btn-lg px-4 me-md-2" value="Начать обучение">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container px-4 py-5" id="icon-grid">
+    <h2 class="pb-2 border-bottom">Почему именно мы?</h2>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Индивидуальное обучение</h3>
+                <p>Подбираем грамматику, наборы слов, статьи, видео и аудио под ваш уровень.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#cpu-fill"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Сильные преподаватели</h3>
+                <p>Преподаватели имеют большой опыт работы и хороший уровень знаний.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#calendar3"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Разговоры с носителями языка</h3>
+                <p>Каждый месяц у вас будет шанс поговорить с носителями языка.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Понятная грамматика</h3>
+                <p>Практикуйтесь в употреблении времён и разберитесь в других правилах на грамматических тренировках.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#speedometer2"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Контролируйте свой прогресс</h3>
+                <p>Отслеживайте свой прогресс от начального до продвинутого уровня и узнавайте, сколько новых слов вы выучили.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#toggles2"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Учись с любой точки мира</h3>
+                <p>Занятия онлайн могут проходить в любом удобном для Вас месте, в любой точке мира, нужен лишь доступ к Интернету.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#geo-fill"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Много практики и домашки</h3>
+                <p>Практика и домашнее задание закрепляет материал, который вы изучили.</p>
+            </div>
+        </div>
+        <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#tools"></use></svg>
+            <div>
+                <h3 class="fw-bold mb-0 fs-4">Получение сертификата</h3>
+                <p>Есои по окончанию вы успешно пройдете тест, то вам выдадут сертификат об окончании курсов и укажем уровень владения языка.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="parts/footer :: footer"></footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>
