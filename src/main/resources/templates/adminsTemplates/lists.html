@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css" th::href="@{/css/usersStyle.css}">
+    <link rel="stylesheet" type="text/css" href="/css/commonStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<main>
+    <section th:insert="parts/adminheader :: adminheader">
+    </section>
+    <div class="ui-container">
+        <div class="courses-header">
+            <div class="faculty-blank courses-blank">
+                <h1>Список пользователей</h1>
+            </div>
+        </div>
+        <div style="margin-bottom: 44px;">
+            <div>
+                <select id = "roleChoice" class="filter-component" name ="filter">
+                    <option>Выберите роль</option>
+                    <option th:value="@{http://localhost:8080/user/lists}">Все пользователи</option>
+                    <option th:value="@{http://localhost:8080/user/roleu}">Пользователь</option>
+                    <option th:value="@{http://localhost:8080/user/rolea}">Администратор</option>
+                    <option th:value="@{http://localhost:8080/user/rolem}">Ментор</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;
+                <form style="display: contents;" th:action="@{http://localhost:8080/user/search}" method="post" th:object="${user}">
+                    <input type="text" class="filter-component" th:value="${user.surname}" name="surname" placeholder="Фамилия">
+                    <button class="filter-button">
+                        <span>Найти</span>
+                    </button>
+                </form>
+
+            </div>
+            <div style="position: relative; display: grid; grid-template-columns: repeat(2,1fr);">
+                <div class="list-card" th:each="user : ${users}">
+                        <div style="display: flex;">
+                            <div class="card-title">Имя</div>
+                            <div class="card-course">
+                                <p th:text=" ${user.name}"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-title">Фамилия</div>
+                            <div class="card-course">
+                                <p th:text=" ${user.surname}"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-title">E-mail</div>
+                            <div class="card-course">
+                                <p th:text="${user.username}"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-title">Телефон</div>
+                            <div class="card-course">
+                                <p th:text="${user.telephone}"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-title">Роль</div>
+                            <div class="card-course">
+                                <p th:text="${user.role}"></p>
+                            </div>
+                        </div>
+                        <div style="display: flex;">
+                            <div class="card-title">Актив</div>
+                            <div class="card-course">
+                                <p th:text="${user.active}"></p>
+                            </div>
+                        </div>
+                    <form style="display: contents;margin:0;width: 100px" th:if="${user.active} == true and ${user_me.id} != ${user.id}" th:action="@{http://localhost:8080/user/block}" method="post" th:object="${user}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px">
+                            <svg viewBox="0 0 1024 1024" width="1em" height="1em"><path fill-rule="evenodd" d="M512 0a269.474 269.474 0 0 1 269.474 269.474v107.79h53.894a161.684 161.684 0 0 1 161.685 161.683v323.369A161.684 161.684 0 0 1 835.368 1024H188.632A161.684 161.684 0 0 1 26.947 862.316V538.947a161.684 161.684 0 0 1 161.685-161.684h53.894v-107.79A269.474 269.474 0 0 1 512 0zm.647 618.119a80.842 80.842 0 1 0 0 161.684 80.842 80.842 0 0 0 0-161.684zM350.316 377.263h323.368v-107.79a161.684 161.684 0 0 0-323.368 0v107.79z"></path></svg>
+                        </button>
+                    </form>
+                    <form style="display: contents;margin:0;width: 100px" th:if="${user.active} == false and ${user_me.id} != ${user.id}" th:action="@{http://localhost:8080/user/unblock}" method="post" th:object="${user}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-unlock" viewBox="0 0 16 16">
+                                <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2zM3 8a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H3z"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <form style="display: contents;margin:0;width: 100px" th:if="(${user.isUser()} == true or ${user.isMentor()} == true) and ${user_me.id} != ${user.id}" th:action="@{http://localhost:8080/user/admin-up}" method="post" th:object="${user}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-person-fill-up" viewBox="0 0 16 16">
+                                <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.354-5.854 1.5 1.5a.5.5 0 0 1-.708.708L13 11.707V14.5a.5.5 0 0 1-1 0v-2.793l-.646.647a.5.5 0 0 1-.708-.708l1.5-1.5a.5.5 0 0 1 .708 0ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+                                <path d="M2 13c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z"></path>
+                            </svg>
+                        </button>
+                    </form>
+                    <form style="display: contents;margin:0;width: 100px" th:if="(${user.isUser()} == true or ${user.isAdmin()}) == true and ${user_me.id} != ${user.id}" th:action="@{http://localhost:8080/user/mentor-up}" method="post" th:object="${user}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-mortarboard-fill" viewBox="0 0 16 16">
+                                <path d="M8.211 2.047a.5.5 0 0 0-.422 0l-7.5 3.5a.5.5 0 0 0 .025.917l7.5 3a.5.5 0 0 0 .372 0L14 7.14V13a1 1 0 0 0-1 1v2h3v-2a1 1 0 0 0-1-1V6.739l.686-.275a.5.5 0 0 0 .025-.917l-7.5-3.5Z"/>
+                                <path d="M4.176 9.032a.5.5 0 0 0-.656.327l-.5 1.7a.5.5 0 0 0 .294.605l4.5 1.8a.5.5 0 0 0 .372 0l4.5-1.8a.5.5 0 0 0 .294-.605l-.5-1.7a.5.5 0 0 0-.656-.327L8 10.466 4.176 9.032Z"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <form style="display: contents;margin:0;width: 100px" th:if="(${user.isAdmin()} == true or ${user.isMentor()}) == true and ${user_me.id} != ${user.id}" th:action="@{http://localhost:8080/user/user-down}" method="post" th:object="${user}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="bi bi-person-down" viewBox="0 0 16 16">
+                                <path d="M12.5 9a3.5 3.5 0 1 1 0 7 3.5 3.5 0 0 1 0-7Zm.354 5.854 1.5-1.5a.5.5 0 0 0-.708-.708l-.646.647V10.5a.5.5 0 0 0-1 0v2.793l-.646-.647a.5.5 0 0 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0ZM11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM8 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"></path>
+                                <path d="M8.256 14a4.474 4.474 0 0 1-.229-1.004H3c.001-.246.154-.986.832-1.664C4.484 10.68 5.711 10 8 10c.26 0 .507.009.74.025.226-.341.496-.65.804-.918C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4s1 1 1 1h5.256Z"></path>
+                            </svg>
+                        </button>
+                    </form>
+                    <form style="display: contents;margin:0;width: 100px" th:if="${user_me.id} == ${user.id}">
+                        <input type="hidden" th:value="${user.id}" name="id" />
+                        <button class="block-button" style="width: 45px;visibility: hidden">
+
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<footer th:insert="parts/footer :: footer"></footer>
+</html>
+
+<script>
+    document.getElementById("roleChoice").onchange = function() {
+        if (this.selectedIndex!==0) {
+            window.location.href = this.value;
+        }
+    };
+</script>

@@ -10,6 +10,6 @@ import java.util.List;
 public interface CoursesRepository extends JpaRepository<Courses, Long> {
     Courses findCoursesById(Long id);
     List<Courses> findCoursesByLanguage(String language);
-
-    List<Courses> findAllByLanguage(String language);
+    List<Courses> findCoursesByName(String name);
+    List<Courses> findCoursesByNameContaining(String name);
 }

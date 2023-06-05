@@ -1,24 +1,25 @@
 package com.golub.school.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
-import java.sql.Date;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class Users implements UserDetails {
     @Id
@@ -53,6 +54,8 @@ public class Users implements UserDetails {
 
     private String country;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past(message = "Неверна заполнена дата рождения")
     private Date birthday;
 
     private String work;
@@ -65,6 +68,23 @@ public class Users implements UserDetails {
     @CollectionTable(name="user_role", joinColumns = @JoinColumn(name="id_user"))
     @Enumerated(EnumType.STRING)
     private Set<Role> role;
+
+    @OneToMany(mappedBy = "users")
+    private Set<Card> card;
+
+    @OneToOne
+    @JoinColumn(name="id_avatar")
+    private Avatar avatar;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="orders",
+            joinColumns = {@JoinColumn(name="iduser", referencedColumnName="id_user")},
+            inverseJoinColumns = {@JoinColumn(name = "idcourse", referencedColumnName="id")})
+    private List<Courses> courses;
+    @ManyToMany()
+    @JoinTable(name="mentors",
+            joinColumns = {@JoinColumn(name="iduser", referencedColumnName="id_user")},
+            inverseJoinColumns = {@JoinColumn(name = "idcourses", referencedColumnName="id")})
+    private List<Courses> mentorCourses;
 
     @Override
     public String getUsername() {
@@ -88,7 +108,15 @@ public class Users implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() { return getRole(); }
-
+    public boolean isAdmin() {
+        return role.contains(Role.ADMIN);
+    }
+    public boolean isUser() {
+        return role.contains(Role.USER);
+    }
+    public boolean isMentor() {
+        return role.contains(Role.MENTOR);
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -99,10 +127,11 @@ public class Users implements UserDetails {
                 Objects.equals(surname, user.surname) &&
                 Objects.equals(telephone, user.telephone) &&
                 Objects.equals(username, user.username) &&
-                Objects.equals(password, user.password);
+                Objects.equals(password, user.password) &&
+                Objects.equals(courses, user.courses);
     }
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, surname, telephone, username, password);
+        return Objects.hash(id, name, surname, telephone, username, password, courses);
     }
 }

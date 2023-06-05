@@ -12,7 +12,9 @@
 </head>
 <body>
 <main>
-    <section th:insert="parts/userhead :: userhead">
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
     </section>
     <div>
         <div style="padding-top: 30px; padding-bottom: 30px; margin-bottom: 10em; margin-top: 10em" class="sign-in-box">

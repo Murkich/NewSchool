@@ -26,22 +26,82 @@
                 <div class="card-course">
                     <p th:text=" ${course.language}"></p>
                 </div>
-                <div class="card-course">
-                    <p th:text="${course.price}"></p>
+                <div class="total-price">
+                    <div style="width:110px; color: rgba(38,38,38,.75);">
+                        Общая сумма
+                    </div>
+                    <p class="total-price-text" th:text="${course.price}"></p>
                 </div>
             </div>
         </div>
         <div class="order-card">
-            <div class="order-card-info">
-                <div style="font-weight: 500;">
-                    Информация карты
-                </div>
-                <div style="margin-top: 1rem;">
-                    <div>
-                        Выберите метод оплаты
+            <form th:action="@{http://localhost:8080/user/order}" method="post">
+                <input type="hidden" th:value="${course.id}" name="id" />
+                <div class="order-card-info">
+                    <div style="font-weight: 500;">
+                        Способ оплаты
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <div style="color: rgba(38,38,38,.75);">
+                            Выберите метод оплаты
+                        </div>
+                        <div class="order-payment">
+                            <button class="order-payment-button dropdown">
+                                <div id="payment" class="order-payment-button-text">
+                                    Новый способ оплаты
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" class="ml-3" aria-hidden="true"><path fill-rule="evenodd" d="M4.929 7.913l7.078 7.057 7.064-7.057a1 1 0 111.414 1.414l-7.77 7.764a1 1 0 01-1.415 0L3.515 9.328a1 1 0 011.414-1.414z" clip-rule="evenodd"></path></svg>
+                                <ul th:if="${card==null}" class="dropdown-user-menu text-small">
+                                    <li class="dropdown-item" role="option">Новый способ оплаты</li>
+                                </ul>
+                                <ul th:if="${card!=null}" class="dropdown-user-menu text-small">
+                                    <li class="dropdown-item" role="option">Новый способ оплаты</li>
+                                </ul>
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div style="display: flex; flex-direction: column; margin-top: 1rem;">
+                    <div style="color: rgba(38,38,38,.75);">
+                        Пожалуйста, заполните информацию
+                    </div>
+                    <div style="display: flex;margin-top: 0.5rem;gap: 0.5rem;justify-content: space-between;width: 100%;">
+                        <div class="wrapper-logpas">
+                            <input style="padding: 2px 13px;" class="form-sign-input" th:field="${card.name}" maxlength="60" type="text" spellcheck="false" placeholder="Имя">
+                        </div>
+                        <div class="wrapper-logpas">
+                            <input style="padding: 2px 13px;" class="form-sign-input" th:field="${card.surname}" maxlength="60" type="text" spellcheck="false" placeholder="Фамилия">
+                        </div>
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <div style="position: relative;border-radius: 0.375rem;border: 0 solid;box-sizing: border-box;">
+                            <input style="width:100%;border: 0 solid;box-sizing: border-box;color: rgba(60,60,67,.6);background-color: rgba(0,10,32,.1);font-size: .875rem;padding: 6px 13px;border-radius: 0.375rem;line-height: 1.25rem;" disabled autocomplete="off" placeholder="E-mail" th:field="${user.username}">
+                        </div>
+                    </div>
+                </div>
+                <div style="display: block;color: rgba(38,38,38,.75);margin-top: 1.5rem;">
+                    <div>
+                        Пожалуйста, введите данные своей карты
+                    </div>
+                    <div style="margin-top: 0.5rem;">
+                        <div style="line-height: 1.25rem;padding: 0.75rem 6px;background-color: rgba(0,10,32,.03);border-radius: 5px;border: 0 solid;box-sizing: border-box;">
+                            <div style="margin: 0px;padding: 0px;border: none;display: block;background: transparent;position: relative;opacity: 1;">
+                                <iframe frameborder="0" allowtransparency="true" scrolling="no" role="presentation" style="border: none;margin: 0px;padding: 0px;width: 1px;min-width: 100%;overflow: hidden;display: block;user-select: none;transform: translate(0px);height: 20px;"
+                                        src="https://js.stripe.com/v3/elements-inner-card-180159345ce5ca40cf05560276ef12f8.html#wait=false&amp;mids[guid]=NA&amp;mids[muid]=1ad41585-df9e-47f9-a51e-8ba88311e9409d7864&amp;mids[sid]=NA&amp;style[base][color]=rgba(60%2C+60%2C+67%2C+0.6)&amp;style[base][padding]=6px+0&amp;style[base][fontSize]=14px&amp;style[base][lineHeight]=20px&amp;style[base][fontSmoothing]=antialiased&amp;style[base][::placeholder][color]=rgba(60%2C+60%2C+67%2C+0.3)&amp;style[invalid][color]=%23EF4743&amp;style[invalid][iconColor]=%23EF4743&amp;rtl=false&amp;componentName=card&amp;keyMode=live&amp;apiKey=pk_live_OOZP6QatzTFUmNL0tkiDZNrc&amp;referrer=https%3A%2F%2Fleetcode.com%2Fsubscribe%2F%3Fref%3Dnb_npl&amp;controllerId=__privateStripeController2791">
+                                    <div th:insert="parts/card"></div>
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display: flex;align-items: flex-end;justify-content: flex-end;margin-top: 1rem;">
+                    <button style="width: 30%" class="filter-button">
+                    <span>
+                        Оплатить
+                    </span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </main>

@@ -12,26 +12,25 @@
 </head>
 <body>
 <main>
-    <section th:insert="parts/userhead :: userhead">
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
     </section>
     <div>
         <div style="padding-top: 0; padding-bottom: 10px" class="sign-in-box">
             <div class="sign-in-container">
                 <div class="sign-in-container2">
-                    <form th:action="@{/user/profile/uploadImg}">
+                    <form th:action="@{/user/profile/edit/uploadImg}" method="post" enctype="multipart/form-data">
                         <div class="avatar-base">
-                            <div>
-                                <a>
-                                    <img class="avatar" src="https://s3-us-west-1.amazonaws.com/s3-lc-upload/assets/default_avatar.jpg" alt="Avatar">
-                                    <div th:if="${editOrSave == 'edit'}" class="avatar-edit" style="right: 95px; top: 1px;">
-                                        <div>
-                                            <label>
-                                                <input accept="image/*" class="avatar-pict" name="image" type="file">
-                                                <img class="_26Evc" src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </a>
+                            <img class="avatar" th:src="${user_avatar}" alt="Avatar">
+                            <div th:if="${editOrSave == 'edit'}" class="avatar-edit" style="width:35px;height:31px;right: 95px; top: 1px;">
+                                <div>
+                                    <label>
+                                        <input accept="image/*" class="avatar-pict" id="avatar-picture" name="image" type="file">
+                                        <img style="cursor: pointer" src="https://d35aaqx5ub95lt.cloudfront.net/images/profile/00e52dc386f5aeaef537e239c70739ab.svg">
+                                    </label>
+                                    <button id="avatar-click" style="visibility: hidden"></button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -62,6 +61,7 @@
                         <br>
                         <span class="wrapper-logpas">
                             <input class="form-sign-input" th:field="*{birthday}" type="date" spellcheck="false" placeholder="День рождения">
+                            <span th:if="${#fields.hasErrors('birthday')}" th:errorclass="error" th:errors="*{birthday}"></span>
                         </span>
                         <br>
                         <span class="wrapper-logpas">
@@ -127,3 +127,11 @@
 </body>
 <footer th:insert="parts/footer :: footer"></footer>
 </html>
+
+<script>
+    document.getElementById('avatar-picture').addEventListener('change', function(){
+        if( this.value ){
+            document.getElementById('avatar-click').click();
+        }
+    });
+</script>

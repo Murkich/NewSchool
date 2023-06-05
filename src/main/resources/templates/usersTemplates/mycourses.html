@@ -14,33 +14,53 @@
 <main>
     <section th:insert="parts/userhead :: userhead">
     </section>
-    <div>
-        <header style="margin-left: 129px; font-size: 20px" data-media-query="not-mobile">
-            <p>Ваши курсы</p>
-        </header>
-        <div style="padding-top: 0; padding-bottom: 10px" class="sign-in-box">
-            <div class="sign-in-container">
-                    <header class="teachlearn__content-header">
-                        <div class="teachlearn__content-header-toolbar">
-                            <span id="ember771" class="search-form ember-view teachlearn__search-form">
-                                <div class="search-form__form">
-                                    <div class="search-form__input-wrapper">
-                                        <input class="search-form__input " placeholder="Название курса или ID" autocomplete="on" spellcheck="false" aria-label="Search" type="search">
-                                        <button class="st-button_style_none search-form__reset" hidden="" type="button" data-ember-action="" data-ember-action-773="773">
-                                            <span id="ember774" class="svg-icon close_icon svg-icon_inline ember-view"><svg xmlns="http://www.w3.org/2000/svg">
-                                                <use xlink:href="/static/frontend-build/icons.svg?1669127364#close"></use>
-                                            </svg>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <button class="button_with-loader search-form__submit teachlearn__search-form-submit" type="button" data-ember-action="" data-ember-action-775="775">
-                                        Искать
-                                    </button>
-                                </div>
-                            </span>
+    <div class="container px-4 py-5">
+        <div class="courses-header">
+            <div class="faculty-blank courses-blank">
+                <h2>Ваши курсы</h2>
+            </div>
+        </div>
+        <div style="position: relative; display: grid; grid-template-columns: repeat(2,1fr); height: 80%">
+            <div class="list-card" th:each="course : ${courses}">
+                <form th:action="@{http://localhost:8080/user/cancel}" method="post" th:object="${course}">
+                    <div style="display: flex;">
+                        <input type="hidden" th:value="${course.id}" name="id" />
+                        <div class="card-title">Наименование</div>
+                        <div class="card-course">
+                            <p th:text=" ${course.name}"></p>
                         </div>
-                    </header>
-                </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="card-title">Язык</div>
+                        <div class="card-course">
+                            <p th:text=" ${course.language}"></p>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="card-title">Цена</div>
+                        <div class="card-course">
+                            <p th:text="${course.price}"></p>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="card-title">Дата начала</div>
+                        <div class="card-course">
+                            <p th:text="${#dates.format(course.begindate, 'dd.MM.yyyy')}"></p>
+                        </div>
+                    </div>
+                    <div style="display: flex;">
+                        <div class="card-title">Дата окончания</div>
+                        <div class="card-course">
+                            <p th:text="${#dates.format(course.enddate, 'dd.MM.yyyy')}"></p>
+                        </div>
+                    </div>
+                    <button th:if="${course.begindate <= #dates.createToday()}" class="filter-button" style="width: 25%">
+                                <span style="font-weight: 500">Обучаться</span>
+                    </button>
+                    <button th:if="${course.begindate > #dates.createToday()}" class="filter-button" style="width: 25%">
+                        <span style="font-weight: 500">Отменить курс</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>

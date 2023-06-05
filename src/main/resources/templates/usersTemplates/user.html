@@ -12,7 +12,11 @@
 </head>
 <body>
 <main>
-    <section th:insert="parts/userhead :: userhead">
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='anonymous'}" th:insert="parts/header-dark :: header-dark">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
     </section>
 </main>
 </body>

@@ -1,4 +1,4 @@
-<div th:fragment="userhead">
+<div th:fragment="adminheader">
     <header class="border-bottom mb-3">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
@@ -10,6 +10,7 @@
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="/courses" class="nav-link px-2 link-dark">Список курсов</a></li>
                     <li><a href="/courses/materials" class="nav-link px-2 link-dark">Материалы</a></li>
+                    <li><a href="/user/lists" class="nav-link px-2 link-dark">Управление пользователями</a></li>
                     <li><a href="/chart" class="nav-link px-2 link-dark">Статистика</a></li>
                 </ul>
 
@@ -19,7 +20,6 @@
                     </a>
                     <form th:action="@{/logout}" method="post">
                         <ul class="dropdown-user-menu text-small">
-                            <li><a class="dropdown-item" href="/user/mycourses">Мои курсы</a></li>
                             <li><a class="dropdown-item" href="/user/profile">Профиль</a></li>
                             <li><a class="dropdown-item" href="/user/account">Аккаунт</a></li>
                             <li><hr class="dropdown-divider"></li>

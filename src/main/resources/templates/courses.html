@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>MUR School</title>
@@ -12,7 +12,11 @@
 </head>
 <body>
 <main>
-    <section th:insert="parts/userhead :: userhead">
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='anonymous'}" th:insert="parts/header-dark :: header-dark">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
     </section>
     <div class="ui-container">
         <div class="courses-header">
@@ -30,16 +34,22 @@
                     <option th:value="@{http://localhost:8080/courses/french}">Французский</option>
                 </select>
                 &nbsp;&nbsp;&nbsp;
-                <input type="text" class="filter-component" placeholder="Наименование курса">
-                <button class="filter-button">
-                    <span>
-                        Найти
-                    </span>
-                </button>
+                <form style="display: contents;" th:action="@{http://localhost:8080/courses/search}" th:object="${course}">
+                    <input type="text" class="filter-component" th:value="${course.name}" name="name" placeholder="Наименование курса">
+                    <button class="filter-button">
+                        <span>Найти</span>
+                    </button>
+                </form>
+                <form th:if="${user_role=='admin'}" style="display: contents;" th:action="@{http://localhost:8080/courses/add}" method="get">
+                    <button class="filter-button" style="width: 15%">
+                        <span>Добавить курс</span>
+                    </button>
+                </form>
+
             </div>
             <div style="position: relative; display: grid; grid-template-columns: repeat(2,1fr);">
                     <div class="list-card" th:each="course : ${courses}">
-                        <form th:action="@{http://localhost:8080/user/order}" method="get" th:object="${course}">
+                        <form th:if="${user_role!='admin'}" th:action="@{http://localhost:8080/user/order}" method="get" th:object="${course}">
                             <div style="display: flex;">
                                 <input type="hidden" th:value="${course.id}" name="id" />
                                 <div class="card-title">Наименование</div>
@@ -47,47 +57,109 @@
                                     <p th:text=" ${course.name}"></p>
                                 </div>
                             </div>
-                        <div style="display: flex;">
-                            <div class="card-title">Язык</div>
-                            <div class="card-course">
-                                <p th:text=" ${course.language}"></p>
+                            <div style="display: flex;">
+                                <div class="card-title">Язык</div>
+                                <div class="card-course">
+                                    <p th:text=" ${course.language}"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div style="display: flex;">
-                            <div class="card-title">Цена</div>
-                            <div class="card-course">
-                                <p th:text="${course.price}"></p>
+                            <div style="display: flex;">
+                                <div class="card-title">Цена</div>
+                                <div class="card-course">
+                                    <p th:text="${course.price}"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div style="display: flex;">
-                            <div class="card-title">Количество мест</div>
-                            <div class="card-course">
-                                <p style="width: 20px; margin: 0" th:text="${course.seats}"></p>
-                                из&nbsp;
-                                <p style="width: 20px; margin: 0" th:text="${course.freeseats}"></p>
+                            <div style="display: flex;">
+                                <div class="card-title">Количество мест</div>
+                                <div class="card-course">
+                                    <p style="width: 20px; margin: 0" th:text="${course.freeseats}"></p>
+                                    из&nbsp;
+                                    <p style="width: 20px; margin: 0" th:text="${course.seats}"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div style="display: flex;">
-                            <div class="card-title">Дата начала</div>
-                            <div class="card-course">
-                                <p th:text="${course.begindate}"></p>
+                            <div style="display: flex;">
+                                <div class="card-title">Дата начала</div>
+                                <div class="card-course">
+                                    <p th:text="${#dates.format(course.begindate, 'dd.MM.yyyy')}"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div style="display: flex;">
-                            <div class="card-title">Дата окончания</div>
-                            <div class="card-course">
-                                <p th:text="${course.enddate}"></p>
+                            <div style="display: flex;">
+                                <div class="card-title">Дата окончания</div>
+                                <div class="card-course">
+                                    <p th:text="${#dates.format(course.enddate, 'dd.MM.yyyy')}"></p>
+                                </div>
                             </div>
-                        </div>
-                            <button th:if="${course.freeseats} == 0" disabled class="filter-button" style="width: 25%">
+                            <button th:if="${course.freeseats} == 0 and ${user_role!='admin'}" disabled class="filter-button" style="width: 25%">
                                 <span style="font-weight: 500">
                                     Записаться</span>
                             </button>
-                            <button th:if="${course.freeseats} != 0" class="filter-button" style="width: 25%">
+                            <button th:if="${course.freeseats} != 0 and ${user_role!='admin'}" class="filter-button" style="width: 25%">
                                 <span style="font-weight: 500">
                                     Записаться</span>
                             </button>
                         </form>
+                        <form th:if="${user_role=='admin'}" th:action="@{http://localhost:8080/courses/edit}" method="get" th:object="${course}">
+                            <div style="display: flex;">
+                                <input type="hidden" th:value="${course.id}" name="id" />
+                                <div class="card-title">Наименование</div>
+                                <div class="card-course">
+                                    <p th:text=" ${course.name}"></p>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="card-title">Язык</div>
+                                <div class="card-course">
+                                    <p th:text=" ${course.language}"></p>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="card-title">Цена</div>
+                                <div class="card-course">
+                                    <p th:text="${course.price}"></p>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="card-title">Количество мест</div>
+                                <div class="card-course">
+                                    <p style="width: 20px; margin: 0" th:text="${course.freeseats}"></p>
+                                    из&nbsp;
+                                    <p style="width: 20px; margin: 0" th:text="${course.seats}"></p>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="card-title">Дата начала</div>
+                                <div class="card-course">
+                                    <p th:text="${#dates.format(course.begindate, 'dd.MM.yyyy')}"></p>
+                                </div>
+                            </div>
+                            <div style="display: flex;">
+                                <div class="card-title">Дата окончания</div>
+                                <div class="card-course">
+                                    <p th:text="${#dates.format(course.enddate, 'dd.MM.yyyy')}"></p>
+                                </div>
+                            </div>
+                            <button class="filter-button" style="width: 45%">
+                                <span>Редактировать</span>
+                            </button>
+                        </form>
+                        <form th:if="${user_role=='admin'}" style="display: contents;" th:action="@{http://localhost:8080/courses/remove}" method="post">
+                            <input type="hidden" th:value="${course.id}" name="id" />
+                            <button class="filter-button" style="width: 45%;margin-top: 1px;">
+                                <span>Удалить</span>
+                            </button>
+                        </form>
+                        <div>
+                            <form th:if="${user_role=='admin'}" style="display: contents;" th:object="${mentors}" th:action="@{http://localhost:8080/courses/mentor}" method="get">
+                                <input type="hidden" th:value="${course.id}" name="id" />
+                                <select style="width: 45%" id = "roleChoice" class="filter-component" name ="filter">
+                                    <option>Выберите ментора</option>
+                                    <option th:each="mentor : ${mentors}" th:value="${mentor.id}" th:text="|${mentor.name} + ' ' + ${mentor.surname}|"></option>
+                                </select>
+                                <button class="filter-button" style="width: 45%;margin-top: 1px;">
+                                    <span>Назначить ментора</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
             </div>
         </div>

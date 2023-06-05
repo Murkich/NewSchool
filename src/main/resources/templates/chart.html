@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css" th::href="@{/css/usersStyle.css}">
+    <link rel="stylesheet" type="text/css" href="/css/commonStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <style>
+        .chartContainer {
+            width: 25%;
+            margin-left: 10%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<main>
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='anonymous'}" th:insert="parts/header-dark :: header-dark">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
+    </section>
+    <div style="display: flex; margin-top: 5%; margin-bottom: 5%">
+        <div class="chartContainer">
+            <canvas id="courseChart"></canvas>
+        </div>
+        <div style="width: 50%; margin-left: 5%">
+            <canvas id="usersChart"></canvas>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // Получите данные для круговой диаграммы из модели
+        var languageCountMap = /*[[${languageCountMap}]]*/ {};
+
+        // Создайте круговую диаграмму
+        var ctx = document.getElementById('courseChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(languageCountMap),
+                datasets: [{
+                    data: Object.values(languageCountMap),
+                    backgroundColor: [
+                        'rgba(255,154,99,0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgb(255,164,99)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // настройки диаграммы
+            }
+        });
+    </script>
+    <script th:inline="javascript">
+        var usersCountMap = /*[[${usersCountMap}]]*/ {};
+
+        var ctx = document.getElementById('usersChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(usersCountMap),
+                datasets: [{
+                    label: 'Количество пользователей',
+                    data: Object.values(usersCountMap),
+                    backgroundColor: 'rgba(255,154,99,0.5)',
+                    borderColor: 'rgb(255,164,99)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }
+            }
+        });
+    </script>
+</main>
+</body>
+<footer th:insert="parts/footer :: footer"></footer>
+</html>

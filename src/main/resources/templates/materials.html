@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/commonStyle.css" th::href="@{/css/commonStyle.css}">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css" th::href="@{/css/usersStyle.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<header>
+    <section th:if="${user_role=='user'}" th:insert="parts/userhead :: userhead">
+    </section>
+    <section th:if="${user_role=='anonymous'}" th:insert="parts/header :: header">
+    </section>
+    <section th:if="${user_role=='admin'}" th:insert="parts/adminheader :: adminheader">
+    </section>
+</header>
+<div class="container px-4 py-5">
+    <div class="courses-header">
+        <div class="faculty-blank courses-blank">
+            <h2>Материалы по английскому</h2>
+        </div>
+    </div>
+    <a class="link" href="/materials/eng/Американский%20английский%20в%20формулах%20для%20русских.pdf">Американский английский в формулах для русских</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/eng/25%20Days%20to%20a%20Better%20English.%20Grammar.pdf">25 Days to a Better English. Grammar</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/eng/25%20Days%20to%20a%20Better%20English.%20Vocabulary.pdf">25 Days to a Better English. Vocabulary</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/eng/Английский%20язык.%20Повседневное%20общение.pdf">Английский язык. Повседневное общение : 30 уроков</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/eng/Три%20кита%20и%20девять%20рыбок%20английской%20грамматики.pdf">Три кита и девять рыбок английской грамматики</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/eng/Cracking%20the%20TOEFL%20iBT.pdf">Cracking the TOEFL iBT</a>
+    <br>
+    <br>
+    <div th:if="${user_role=='admin'}">
+        <button class="material-button" style="width: auto"> Добавить материал</button>
+        <br>
+        <br>
+    </div>
+    <div class="courses-header">
+        <div class="faculty-blank courses-blank">
+            <h2>Материалы по немецкому</h2>
+        </div>
+    </div>
+    <a class="link" href="/materials/germ/Pluspunkt_Deutsch_Kursbuch_1.pdf">Pluspunkt Deutsch. Базовый учебник для А1</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/germ/Pluspunkt_Deutsch_Kursbuch_2.pdf">Pluspunkt Deutsch. Учебник для А2</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/germ/Pluspunkt_Deutsch_Kursbuch_3.pdf">Pluspunkt Deutsch. Учебник для B1</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/germ/Mittelpunkt_B2_Lehr-_und_Arbeitsbuch_Lektionen.pdf">Mittelpunkt B2 Рабочая тетрадь для В2</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/germ/Mit Erfolg zur DSH B2 - C2.pdf">Mit Erfolg. Учебник для B2 - C2</a>
+    <br>
+    <br>
+    <div th:if="${user_role=='admin'}">
+        <button class="material-button" style="width: auto"> Добавить материал</button>
+        <br>
+        <br>
+    </div>
+    <div class="courses-header">
+        <div class="faculty-blank courses-blank">
+            <h2>Материалы по французскому</h2>
+        </div>
+    </div>
+    <a class="link" href="/materials/french/edito-a1-fragment2.pdf">Учебник для А1</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/french/edito-a2.pdf">Учебник для А2</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/french/fragment-communication-interm-diaire.pdf">Учебник для среднего уровня</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/french/fragment-communication-perfectionnement.pdf">Учебник для продвинутого уровня</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/french/Destination_Delf_A1.pdf">Подготовка к DELF A1</a>
+    <br>
+    <br>
+    <a class="link" href="/materials/french/DELF_junior_scolaire_B2.pdf">Подготовка к DELF B2</a>
+    <div th:if="${user_role=='admin'}">
+        <br>
+        <br>
+        <button class="material-button" style="width: auto"> Добавить материал</button>
+    </div>
+</div>
+<footer th:insert="parts/footer :: footer"></footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>

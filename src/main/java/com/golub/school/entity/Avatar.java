@@ -1,15 +1,18 @@
 package com.golub.school.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name="avatar")
 public class Avatar {
     @Id
@@ -18,11 +21,11 @@ public class Avatar {
     private String name;
     private String type;
     @Lob
-    private byte[] data;
+    private String data;
 
-    public Avatar(String fileName, String contentType, byte[] bytes) {
+    public Avatar(String fileName, String contentType, String data) {
         this.name = fileName;
         this.type = contentType;
-        this.data = bytes;
+        this.data = data;
     }
 }

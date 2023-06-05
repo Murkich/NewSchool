@@ -2,6 +2,7 @@ package com.golub.school.controllers;
 
 import com.golub.school.entity.Role;
 import com.golub.school.entity.Users;
+import com.golub.school.service.AvatarService;
 import com.golub.school.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,6 +22,8 @@ public class RegistrationController {
     BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private UsersService userService;
+    @Autowired
+    private AvatarService avatarService;
 
     @GetMapping("/reg")
     public String registration(Model model) {
@@ -52,6 +55,7 @@ public class RegistrationController {
             user.setActive(true);
             user.setRole(Collections.singleton(Role.valueOf("USER")));
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setAvatar(avatarService.getAllAvatar().get(0));
             userService.saveUser(user);
         }
         return "signin";

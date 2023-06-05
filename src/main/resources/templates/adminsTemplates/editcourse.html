@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MUR School</title>
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/css/usersStyle.css">
+    <link rel="stylesheet" href="/css/commonStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="text-center">
+<header th:insert="parts/adminheader :: adminheader"></header>
+<div>
+    <div class="sign-in-box">
+        <div class="sign-in-container">
+            <div class="sign-in-container2">
+                <form class="form-sign-group" th:action="@{http://localhost:8080/courses/save}" method="post" th:object="${course}">
+                    <input type="hidden" th:value="${course.id}" name="id" />
+                    <span style="width: 100%;color: #455a64;font-weight: 400;padding: 8.85px 13px;font-size: 14px;">
+                        Введите название курса
+                    </span>
+                    <span class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{name}" maxlength="255" type="text" spellcheck="false" placeholder="Название курса">
+                    </span>
+                    <span th:errorclass="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+                    <span style="width: 100%;color: #455a64;font-weight: 400;padding: 8.85px 13px;font-size: 14px;">
+                        Введите язык курса
+                    </span>
+                    <span class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{language}" maxlength="150" type="text" spellcheck="false" placeholder="Язык курса">
+                    </span>
+                    <span th:if="${#fields.hasErrors('language')}" th:errorclass="error" th:errors="*{language}"></span>
+
+                    <span style="width: 100%;color: #455a64;font-weight: 400;padding: 8.85px 13px;font-size: 14px;">
+                        Введите цену
+                    </span>
+                    <span class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{price}" type="number" spellcheck="false" placeholder="Цена">
+                    </span>
+                    <span th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"></span>
+
+                    <span style="width: 100%;color: #455a64;font-weight: 400;padding: 8.85px 13px;font-size: 14px;">
+                        Введите количество мест на курс
+                    </span>
+                    <span class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{seats}" type="number" spellcheck="false" placeholder="Количество мест">
+                    </span>
+                    <span th:if="${#fields.hasErrors('seats')}" th:errorclass="error" th:errors="*{seats}"></span>
+
+                    <span style="width: 100%;color: #455a64;font-weight: 400;padding: 8.85px 13px;font-size: 14px;">
+                        Введите начало и окончание курса
+                    </span>
+                    <div style="display: flex">
+                        <span style="width: 47%" class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{begindate}" type="date" placeholder="Начало курса" spellcheck="false">
+                    </span>
+
+                        <span style="width: 47%" class="wrapper-logpas">
+                        <input class="form-sign-input" th:field="*{enddate}" type="date" placeholder="Окончание курса" spellcheck="false">
+                    </span>
+                    </div>
+                    <div style="display: flex">
+                        <span style="width: 47%" th:if="${#fields.hasErrors('begindate')}" th:errorclass="error" th:errors="*{begindate}"></span>
+                        <span style="width: 47%" th:if="${#fields.hasErrors('enddate')}" th:errorclass="error" th:errors="*{enddate}"></span>
+                        <div style="text-align: left" th:if="${#fields.hasErrors('global')}">
+                            <span class="error" th:each="err : ${#fields.errors('global')}" th:text="${err}"></span>
+                        </div>
+                    </div>
+
+                    <br>
+                    <button class="form-sign-button">
+                        <span>
+                            Сохранить
+                        </span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:insert="parts/footer :: footer"></footer>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+</body>
+</html>
